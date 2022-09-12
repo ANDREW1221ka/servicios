@@ -9,7 +9,25 @@ volumes:
 
 
 ###### SERVICIO DE MONGO#####
-services:
+services: 
+
+ node:
+  container_name: node
+  image: "node:14"
+  working_dir: /home/node/app
+  volumes:
+  - ./app/:/home/node/app
+  ports:
+  - "3000:3000"
+  - "3001:3001"
+  - "80:3002"
+  links:
+  - emqx
+  - mongo
+  command: sh -c "npm run build && npm run start"
+
+
+
  mongo:
   container_name: mongo
   image: mongo:4.4
@@ -52,7 +70,7 @@ services:
 
     ############## EMQXCONF #############
     EMQX_ALLOW_ANONYMOUS: "false"
-    
+
     ##### por defecto contraseña de la dashboard
     EMQX_DASHBOARD__DEFAULT_USER__PASSWORD: "${PASSWORD_EMQX_DEFAULT}"
     ########## CONEXION A MONGO#########
@@ -65,7 +83,7 @@ services:
 
     EMQX_AUTH__MONGO__LOGIN: "${MONGO_USERNAME}"
     EMQX_AUTH__MONGO__PASSWORD: "${MONGO_PASSWORD}"
-    EMQX_AUTH__MONGO__AUTH_SOURCE: admin  
+    EMQX_AUTH__MONGO__AUTH_SOURCE: admin
 
     EMQX_AUTH__MONGO__DATABASE: "PROYECTOFINAL"
     EMQX_AUTH__MONGO__AUTH_QUERY__COLLECTION: "emqxauthrules"
@@ -87,12 +105,3 @@ services:
     EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard, emqx_auth_mongo"
 
      ## Enable ACL query.
-    
-
-
-   
-
-
- 
- 
-
