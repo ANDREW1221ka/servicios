@@ -10,24 +10,6 @@ volumes:
 
 ###### SERVICIO DE MONGO#####
 services: 
-
- node:
-  container_name: node
-  image: "node:14"
-  working_dir: /home/node/app
-  volumes:
-  - ./app/:/home/node/app
-  ports:
-  - "3000:3000"
-  - "3001:3001"
-  - "80:3002"
-  links:
-  - emqx
-  - mongo
-  command: sh -c "npm run build && npm run start"
-
-
-
  mongo:
   container_name: mongo
   image: mongo:4.4
@@ -60,7 +42,7 @@ services:
    links:
    - mongo
    extra_hosts:
-    - "localhost:192.168.100.8"
+    - "localhost:192.168.157.79"
 
    environment:
     EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000

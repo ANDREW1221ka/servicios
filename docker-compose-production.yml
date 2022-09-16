@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  node:
-    conetiner_name: node
+node:
+    container_name: node
     image: "node:14"
     restart: always
     working_dir: /home/node/app
@@ -13,6 +13,8 @@ services:
     links:
     - emqx
     - mongo
+    
+    command: sh -c "echo 'delaying 30 seconds' && sleep 30 && npm run start"
   
 mongo:
   container_name: mongo
